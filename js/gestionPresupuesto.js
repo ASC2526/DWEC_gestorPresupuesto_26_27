@@ -4,6 +4,12 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
+function listarGastos() {
+  return gastos;
+}
+
+
+
 function actualizarPresupuesto(valor) {
     if (typeof valor === "number" && valor >= 0) {
       presupuesto = valor;
@@ -38,7 +44,7 @@ function CrearGasto(descripcion, valor) {
     this.actualizarValor = function (nuevoValor) {
       if (typeof nuevoValor === "number" && nuevoValor >= 0) {
       this.valor = nuevoValor;
-    }
+}
 };
 }
 
@@ -48,5 +54,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
