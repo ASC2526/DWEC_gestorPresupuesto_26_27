@@ -9,7 +9,6 @@ function listarGastos() {
 }
 
 
-
 function actualizarPresupuesto(valor) {
     if (typeof valor === "number" && valor >= 0) {
       presupuesto = valor;
@@ -24,8 +23,15 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, etiquetas) {
     this.descripcion = descripcion;
+
+    if (typeof fecha === "string" && !isNaN(Date.parse(fecha)))
+    {
+      this.fecha = Date.parse(fecha);
+    } else {
+      this.fecha = Date.now();
+    }
 
     if (typeof valor === "number" && valor >= 0) {
       this.valor = valor;
