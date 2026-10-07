@@ -8,6 +8,31 @@ function listarGastos() {
   return gastos;
 }
 
+function anyadirGasto(gasto) {
+  gasto.id = idGasto;
+  idGasto++;
+  gastos.push(gasto);
+}
+
+function borrarGasto(id) {
+  for (let i = 0; i < gastos.length; i++) {
+    if (gastos[i].id === id) {
+      gastos.splice(i, 1);
+      break;
+    }
+  }
+}
+
+function calcularTotalGastos() {
+  return gastos.reduce(function (total, gasto) {
+    return total + gasto.valor;
+  }, 0);
+}
+
+function calcularBalance() {
+  return presupuesto - calcularTotalGastos();
+}
+
 
 function actualizarPresupuesto(valor) {
     if (typeof valor === "number" && valor >= 0) {
@@ -41,14 +66,44 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.etiquetas = [];
     this.anyadirEtiquetas = function (...nuevasEtiquetas) {
-      for (let etiquetas of nuevasEtiquetas) {
-        if (!etiquetas.includes(etiqueta))
+      for (let etiqueta of nuevasEtiquetas) {
+        if (!this.etiquetas.includes(etiqueta))
         {
-          etiquetas.push(etiqueta);
+          this.etiquetas.push(etiqueta);
         }
       }
     }
 
+    this.anyadirEtiquetas(...etiquetas);
+
+    this.borrarEtiquetas = function (...etiquetasABorrar) {
+      for (let etiqueta of etiquetasABorrar) {
+        let posicion = this.etiquetas.indexOf(etiqueta);
+
+        if (posicion !== -1) {
+          this.etiquetas.splice(posicion, 1);
+        }
+      }
+    };
+
+    this.mostrarGastoCompleto = function () {
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        texto += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
+        texto += `Etiquetas:\n`;
+
+        for (let etiqueta of this.etiquetas) {
+          texto += `- ${etiqueta}\n`;
+        }
+
+        return texto;
+    };
+
+    this.actualizarFecha = function (nuevaFecha) {
+      if (typeof nuevaFecha === "string" && !isNaN(Date.parse(nuevaFecha))) {
+        this.fecha = Date.parse(nuevaFecha);
+      }
+    };
+    
     this.mostrarGasto = function () {
       return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     };
