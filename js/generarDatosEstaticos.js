@@ -31,4 +31,46 @@ gestionPresupuestoWeb.mostrarDatoEnId(
     "balance-total", gestionPresupuesto.calcularBalance()
 );
 
+let listaGastos = gestionPresupuesto.listaGastos();
+for (let gasto of listaGastos) {
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+
+let gastoSeptiembre = gestionPresupuesto.filtrarGastos({
+    fechaDesde: "2021-09-01",
+    fechaHasta: "2021-09-2 30"
+});
+
+for (let gasto of gastoSeptiembre) {
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+let gastosMayor50 = gestionPresupuesto.filtrarGastos({
+    valorMinimo: 50.01
+});
+
+for (let gasto of gastosMayor50) {
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+let gastoSeguros = gestionPresupuesto.filtrarGastos({
+    valorMinimo: 200.01,
+    etiquetasTiene: ["seguros"]
+});
+
+for (let gasto of gastoSeguros) {
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+let gastoComidaTransporte = gestionpresupuesto.filtrarGastos({
+    valorMaximo: 49.99,
+    etiquetasTiene: ["comida", "transporte"]
+});
+
+for (let gasto of gastosComidaTransporte) {
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
+
+
+
 
