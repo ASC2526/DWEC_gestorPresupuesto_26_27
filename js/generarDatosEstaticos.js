@@ -1,5 +1,5 @@
-import * as gp from "./gestionPresupuesto.js";
-import * as gpw from "./gestionPresupuestoWeb.js";
+import * as gestionPresupuesto from "./gestionPresupuesto.js";
+import * as gestionPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
 gp.actualizarPresupuesto(1500);
 gpw.mostrarDatoEnId("presupuesto", gp.mostrarPresupuesto());
@@ -31,14 +31,14 @@ gestionPresupuestoWeb.mostrarDatoEnId(
     "balance-total", gestionPresupuesto.calcularBalance()
 );
 
-let listaGastos = gestionPresupuesto.listaGastos();
+let listaGastos = gestionPresupuesto.listarGastos();
 for (let gasto of listaGastos) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
 
 let gastoSeptiembre = gestionPresupuesto.filtrarGastos({
     fechaDesde: "2021-09-01",
-    fechaHasta: "2021-09-2 30"
+    fechaHasta: "2021-09-30"
 });
 
 for (let gasto of gastoSeptiembre) {
@@ -62,7 +62,7 @@ for (let gasto of gastoSeguros) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
 
-let gastoComidaTransporte = gestionpresupuesto.filtrarGastos({
+let gastosComidaTransporte = gestionPresupuesto.filtrarGastos({
     valorMaximo: 49.99,
     etiquetasTiene: ["comida", "transporte"]
 });
@@ -72,5 +72,12 @@ for (let gasto of gastosComidaTransporte) {
 }
 
 
+let gastosAgrupadosDia = gestionPresupuesto.agruparGastos("dia");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgrupadosDia, "dia"); 
 
+let gastosAgrupadosMes = gestionPresupuesto.agruparGastos("mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gastosAgrupadosMes,"mes");
+
+let gastosAgrupadosAnyo = gestionPresupuesto.agruparGastos("anyo");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAgrupadosAnyo, "anyo");
 
