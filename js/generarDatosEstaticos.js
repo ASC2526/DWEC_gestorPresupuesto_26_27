@@ -1,8 +1,8 @@
 import * as gestionPresupuesto from "./gestionPresupuesto.js";
 import * as gestionPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
-gp.actualizarPresupuesto(1500);
-gpw.mostrarDatoEnId("presupuesto", gp.mostrarPresupuesto());
+gestionPresupuesto.actualizarPresupuesto(1500);
+gestionPresupuestoWeb.mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
 let gasto1 = new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 
