@@ -24,11 +24,11 @@ gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
 gestionPresupuestoWeb.mostrarDatoEnId(
-    "gastos-totales", gestionPresupuesto.calcularTotalGastos()
+    "gastos-totales", gestionPresupuesto.calcularTotalGastos().toFixed(2)
 );
 
 gestionPresupuestoWeb.mostrarDatoEnId(
-    "balance-total", gestionPresupuesto.calcularBalance()
+    "balance-total", gestionPresupuesto.calcularBalance().toFixed(2)
 );
 
 let listaGastos = gestionPresupuesto.listarGastos();
