@@ -70,8 +70,8 @@ function EditarHandle() {
     let etiquetasArray = etiquetas.split(",");
 
     this.gasto.actualizarDescripcion(descripcion);
-    this.valor.actualizarValor(valor);
-    this.fecha.actualizarFecha(fecha);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(fecha);
     this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
     this.gasto.anyadirEtiquetas(...etiquetasArray);
 
@@ -88,7 +88,7 @@ function BorrarHandle() {
 
 function BorrarEtiquetasHandle() {
   this.handleEvent = function() {
-    gestionPresupuesto.borrarEtiquetas(this.etiqueta);
+    this.gasto.borrarEtiquetas(this.etiqueta);
     repintar();
   }
 }
@@ -106,7 +106,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
   let fecha = document.createElement("div");
   fecha.className = "gasto-fecha";
-  fecha.textContent = new Date(gasto.fecha).toLocaleString();
+  fecha.textContent = new Date(gasto.fecha).toLocaleDateString('es');
 
   let valor = document.createElement("div");
   valor.className = "gasto-valor";
@@ -121,13 +121,40 @@ function mostrarGastoWeb(idElemento, gasto) {
     span.className = "gasto-etiquetas-etiqueta";
     span.textContent = etiqueta;
 
+    let manejadorEtiqueta = new BorrarEtiquetasHandle();
+    manejadorEtiqueta.gasto = gasto;
+    manejadorEtiqueta.etiqueta = etiqueta;
+
+    span.addEventListener("click", manejadorEtiqueta);
     etiquetas.append(span);
   }
+
+  let botonEditar = document.createElement("button");
+  botonEditar.type = "button";
+  botonEditar.className = "gasto-editar";
+  botonEditar.textContent = "Editar";
+
+  let manejadorEditar = new EditarHandle();
+  manejadorEditar.gasto = gasto;
+
+  botonEditar.addEventListener("click", manejadorEditar);
+
+  let botonBorrar = document.createElement("button");
+  botonBorrar.type = "button";
+  botonBorrar.className = "gasto-borrar";
+  botonBorrar.textContent = "Borrar";
+
+  let manejadorBorrar = new BorrarHandle();
+  manejadorBorrar.gasto = gasto;
+
+  botonBorrar.addEventListener("click", manejadorBorrar);
 
   divGasto.append(descripcion);
   divGasto.append(fecha);
   divGasto.append(valor);
   divGasto.append(etiquetas);
+  divGasto.append(botonEditar);
+  divGasto.append(botonBorrar);
 
   elemento.append(divGasto);
 }
