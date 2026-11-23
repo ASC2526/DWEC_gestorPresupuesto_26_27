@@ -59,6 +59,40 @@ function nuevoGastoWeb() {
 let botonAnyadir = document.getElementById("anyadirgasto");
 botonAnyadir.addEventListener("click", nuevoGastoWeb);
 
+function EditarHandle() {
+  this.handleEvent = function() {
+
+    let descripcion = prompt("Introduce la descripción:", this.gasto.descripcion);
+    let valor = Number(prompt("Introduce el valor:", this.gasto.valor));
+    let fecha = prompt("Introduce la fecha (yyyy-mm-dd):", new Date(this.gasto.fecha).toISOString().substring(0, 10));
+    let etiquetas = prompt("Introduce las etiquetas separadas por comas:", this.gasto.etiquetas.join(","));
+
+    let etiquetasArray = etiquetas.split(",");
+
+    this.gasto.actualizarDescripcion(descripcion);
+    this.valor.actualizarValor(valor);
+    this.fecha.actualizarFecha(fecha);
+    this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
+    this.gasto.anyadirEtiquetas(...etiquetasArray);
+
+    repintar();
+  };
+}
+
+function BorrarHandle() {
+  this.handleEvent = function() {
+    gestionPresupuesto.borrarGasto(this.gasto.id);
+    repintar();
+  }
+}
+
+function BorrarEtiquetasHandle() {
+  this.handleEvent = function() {
+    gestionPresupuesto.borrarEtiquetas(this.etiqueta);
+    repintar();
+  }
+}
+
 function mostrarGastoWeb(idElemento, gasto) {
 
   let elemento = document.getElementById(idElemento);
